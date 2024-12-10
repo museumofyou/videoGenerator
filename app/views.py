@@ -42,21 +42,19 @@ def upload_file(request):
                 prompt = "Two people hug each other warmly. They are smiling."
             if form_type=="form2":
                 prompt = "Two people kiss each other"
-            result = prompt
-            print(result)
             #Send file URLs to the special API
-            # result = fal_client.subscribe(
-            #     "fal-ai/kling-video/v1.5/pro/image-to-video",
-            #     arguments={
-            #         "prompt": prompt,
-            #         "image_url": processed_file_path,
-            #         "duration": "5",
-            #         "aspect_ratio": "16:9"
-            #     },
-            #     with_logs=True,
-            #     on_queue_update=on_queue_update,
-            # )
-            # print(result)
+            result = fal_client.subscribe(
+                "fal-ai/kling-video/v1.5/pro/image-to-video",
+                arguments={
+                    "prompt": prompt,
+                    "image_url": processed_file_path,
+                    "duration": "5",
+                    "aspect_ratio": "16:9"
+                },
+                with_logs=True,
+                on_queue_update=on_queue_update,
+            )
+            print(result)
             #Return success response
             return JsonResponse({
                 'message': 'Files uploaded successfully',
