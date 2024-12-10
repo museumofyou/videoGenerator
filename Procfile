@@ -1,1 +1,1 @@
-web: gunicorn aiVideoGenerator.wsgi
+web: gunicorn aiVideoGenerator.wsgi:application
