@@ -36,7 +36,7 @@ def upload_file(request):
             combined_file = "combined.png"
             processed_file_path = os.path.join(upload_dir, combined_file)
             newImage.save(processed_file_path, "png")
-            file_url = request.build_absolute_uri(f"{settings.MEDIA_URL}{processed_file_path}")
+            file_url = f"http://{request.get_host()}{settings.MEDIA_URL}uploads/" + combined_file
             print(file_url)
             if form_type=="form1":
                 prompt = "Two people hug each other warmly. They are smiling."
