@@ -1,3 +1,5 @@
 gunicorn==23.0.0
 packaging==24.2
 django
+pillow
+fal_client
