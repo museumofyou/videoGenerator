@@ -6,7 +6,6 @@
     <title>AI Video Generator</title>
     <style>
       #loader {
-        /* display: none; */
         position: fixed;
         top: 50%;
         left: 50%;
@@ -60,7 +59,7 @@
         AI video created successfully!
       </div>
       <div id="fail-alert" class="alert alert-danger d-none" role="alert">
-        AI video created failed!
+        AI video creation failed!
       </div>
 
       <!-- Loader -->
@@ -70,7 +69,7 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Hugging Video</h5>
-          <form id="form1" enctype="multipart/form-data">
+          <form id="form1" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="form1" />
             <div class="mb-3">
@@ -105,7 +104,7 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Kissing Video</h5>
-          <form id="form2" enctype="multipart/form-data">
+          <form id="form2" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="form2" />
             <div class="mb-3">
@@ -140,7 +139,7 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">Squishing Video</h5>
-          <form id="form3" enctype="multipart/form-data">
+          <form id="form3" enctype="multipart/form-data" method="POST">
             {% csrf_token %}
             <input type="hidden" name="form_type" value="form3" />
             <div class="mb-3">
@@ -213,25 +212,24 @@
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data)
-            //loader.style.display = "none";
-            console.log(data.message);
+            console.log(data);
+            loader.style.display = "none";
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
-              fetch(url)
+              fetch(data.videoUrl) // Assuming 'data.videoUrl' contains the video download URL
                 .then((response) => response.blob())
                 .then((blob) => {
                   const url = window.URL.createObjectURL(blob);
                   const a = document.createElement("a");
                   a.style.display = "none";
                   a.href = url;
-                  a.download = fileName; // Ensure `fileName` is dynamically set
+                  a.download = data.videoFileName; // Ensure 'data.videoFileName' is dynamically set
                   document.body.appendChild(a);
                   a.click();
                   window.URL.revokeObjectURL(url);
                 })
                 .catch((error) =>
-                  console.error("Error downloading image:", error)
+                  console.error("Error downloading video:", error)
                 );
             } else {
               document.getElementById("fail-alert").style.display = "block";
@@ -239,7 +237,6 @@
           })
           .catch(() => {
             loader.style.display = "none";
-
             document.getElementById("fail-alert").style.display = "block";
           });
       }
@@ -259,7 +256,6 @@
 
     <script>
       function toggleSubmitButton(formInputsSelector, submitButtonId) {
-        console.log(formInputsSelector);
         const inputs = document.querySelectorAll(formInputsSelector);
         const button = document.getElementById(submitButtonId);
 
@@ -278,9 +274,7 @@
       }
 
       toggleSubmitButton(".form1-input", "form1-submit");
-
       toggleSubmitButton(".form2-input", "form2-submit");
-
       toggleSubmitButton(".form3-input", "form3-submit");
     </script>
   </body>
