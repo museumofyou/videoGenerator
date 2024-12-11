@@ -203,6 +203,10 @@
         const loader = document.getElementById("loader");
         loader.style.display = "block";
 
+        document.getElementById("form1").style.disabled = true
+        document.getElementById("form2").style.disabled = true
+        document.getElementById("form3").style.disabled = true
+
         document.getElementById("success-alert").style.display = "none";
         document.getElementById("fail-alert").style.display = "none";
 
@@ -216,6 +220,9 @@
           .then((data) => {
             console.log(data);
             loader.style.display = "none";
+            document.getElementById("form1").style.disabled = false
+            document.getElementById("form2").style.disabled = false
+            document.getElementById("form3").style.disabled = false
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
               fetch(data.videoUrl) // Assuming 'data.videoUrl' contains the video download URL
