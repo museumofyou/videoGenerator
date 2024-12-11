@@ -59,7 +59,7 @@ def upload_file(request):
             if form_type=="form2":
                 prompt = "Two people kiss passionately. Replace background with romantic image."
             #Send file URLs to the special API
-            result = asyncio(generateVideo(prompt, file_url))
+            result = asyncio.run(generateVideo(prompt, file_url))
             print(result)
             #Return success response
             return JsonResponse({
