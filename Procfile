@@ -1,1 +1,1 @@
-web: gunicorn aiVideoGenerator.wsgi:application --timeout 600
+web: gunicorn --timeout 600 aiVideoGenerator.wsgi:application

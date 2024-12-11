@@ -1,27 +1,19 @@
 import os
-import logging
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core.files.storage import default_storage
 from django.conf import settings
 from PIL import Image, UnidentifiedImageError
-from asgiref.sync import async_to_sync
 import fal_client
+import asyncio
 
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
-# Index view
-def index(request):
-    return render(request, 'index.html')
-
-# Asynchronous function to generate video
-async def generate_video(prompt, url):
+# Define the async function for generating video
+async def generate_video_async(prompt, url):
     async def on_queue_update(update):
         if isinstance(update, fal_client.InProgress):
             for log in update.logs:
-                logger.info(f"In progress: {log['message']}")
+                print(f"In progress: {log['message']}")
 
     result = await fal_client.subscribe_async(
         "fal-ai/kling-video/v1.5/pro/image-to-video",
@@ -36,8 +28,9 @@ async def generate_video(prompt, url):
     )
     return result
 
-# File upload handler
-def upload_file(request):
+
+# Asynchronous Django view
+async def upload_file(request):
     if request.method == 'POST' and request.FILES:
         form_type = request.POST.get('form_type')
         if form_type not in ['form1', 'form2']:
@@ -78,16 +71,16 @@ def upload_file(request):
             elif form_type == "form2":
                 prompt = "Two people kiss passionately. Replace background with a romantic image."
 
-            # Call asynchronous function and block until completion
-            result = async_to_sync(generate_video)(prompt, file_url)
+            # Await the API response
+            api_result = await generate_video_async(prompt, file_url)
 
+            # Return success response
             return JsonResponse({
-                'message': 'Files uploaded and video generated successfully',
-                'video_result': result,
+                'message': 'Files uploaded and video generated successfully.',
+                'video_result': api_result,
             })
 
         except Exception as e:
-            logger.error(f"Error during processing: {e}")
             return JsonResponse({'error': str(e)}, status=500)
 
     return JsonResponse({"error": "Invalid request"}, status=400)
