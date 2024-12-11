@@ -207,7 +207,7 @@
         document.getElementById("form2-submit").disabled = true
         document.getElementById("form3-submit").disabled = true
 
-        inputs = document.getElementsByName("file");
+        inputs = document.getElementsByClassName("form-control")
         inputs.map(input => {
           input.disabled = true
         })
