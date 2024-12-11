@@ -6,6 +6,7 @@
     <title>AI Video Generator</title>
     <style>
       #loader {
+        display: block;
         position: fixed;
         top: 50%;
         left: 50%;
@@ -213,7 +214,7 @@
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            loader.style.display = "none";
+            // loader.style.display = "none";
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
               fetch(data.videoUrl) // Assuming 'data.videoUrl' contains the video download URL
