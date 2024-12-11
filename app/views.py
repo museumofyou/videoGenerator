@@ -47,7 +47,7 @@ def upload_file(request):
                 "fal-ai/kling-video/v1.5/pro/image-to-video",
                 arguments={
                     "prompt": prompt,
-                    "image_url": processed_file_path,
+                    "image_url": file_url,
                     "duration": "5",
                     "aspect_ratio": "16:9"
                 },
