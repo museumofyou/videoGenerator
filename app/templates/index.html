@@ -215,7 +215,7 @@
           .then((response) => response.json())
           .then((data) => {
             loader.style.display = "none";
-
+            console.log(data.message);
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
               fetch(url)
