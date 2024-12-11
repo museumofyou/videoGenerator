@@ -6,7 +6,7 @@
     <title>AI Video Generator</title>
     <style>
       #loader {
-        display: none;
+        /* display: none; */
         position: fixed;
         top: 50%;
         left: 50%;
@@ -199,7 +199,6 @@
 
       function handleFormSubmit(event) {
         event.preventDefault();
-
         const loader = document.getElementById("loader");
         loader.style.display = "block";
 
@@ -215,7 +214,7 @@
           .then((response) => response.json())
           .then((data) => {
             console.log(data)
-            loader.style.display = "none";
+            //loader.style.display = "none";
             console.log(data.message);
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
