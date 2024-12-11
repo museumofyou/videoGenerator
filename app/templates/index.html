@@ -208,9 +208,9 @@
         document.getElementById("form3-submit").disabled = true
 
         inputs = document.getElementsByClassName("form-control")
-        inputs.map(input => {
-          input.disabled = true
-        })
+        for(i = 0 ; i < inputs.length; i++){
+          inputs[i].disabled = true
+        }
         document.getElementById("success-alert").style.display = "none";
         document.getElementById("fail-alert").style.display = "none";
 
@@ -224,9 +224,9 @@
           .then((data) => {
             console.log(data);
             loader.style.display = "none";
-            inputs.map(input => {
-              input.disabled = false
-            })
+            for(i = 0 ; i < inputs.length; i++){
+              inputs[i].disabled = true
+            }
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
               fetch(data.videoUrl) // Assuming 'data.videoUrl' contains the video download URL
