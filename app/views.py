@@ -5,14 +5,30 @@ from django.core.files.storage import default_storage
 from django.conf import settings
 from PIL import Image
 import fal_client
-
-def on_queue_update(update):
-    if isinstance(update, fal_client.InProgress):
-        for log in update.logs:
-           print("in progress ---- ",log["message"])
+import asyncio
 
 def index(request):
     return render(request, 'index.html')
+
+async def generateVideo(prompt, url):
+
+    def on_queue_update(update):
+        if isinstance(update, fal_client.InProgress):
+            for log in update.logs:
+                print("in progress ---- ",log["message"])
+
+    result = await fal_client.subscribe_async(
+                "fal-ai/kling-video/v1.5/pro/image-to-video",
+                arguments={
+                    "prompt": prompt,
+                    "image_url": url,
+                    "duration": "5",
+                    "aspect_ratio": "16:9"
+                },
+                with_logs=True,
+                on_queue_update=on_queue_update,
+            )
+    return result
 
 def upload_file(request):
     if request.method == 'POST' and request.FILES:
@@ -43,17 +59,7 @@ def upload_file(request):
             if form_type=="form2":
                 prompt = "Two people kiss each other"
             #Send file URLs to the special API
-            result = fal_client.subscribe(
-                "fal-ai/kling-video/v1.5/pro/image-to-video",
-                arguments={
-                    "prompt": prompt,
-                    "image_url": file_url,
-                    "duration": "5",
-                    "aspect_ratio": "16:9"
-                },
-                with_logs=True,
-                on_queue_update=on_queue_update,
-            )
+            result = asyncio(generateVideo(prompt, file_url))
             print(result)
             #Return success response
             return JsonResponse({
