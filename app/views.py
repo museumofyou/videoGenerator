@@ -55,9 +55,9 @@ def upload_file(request):
             file_url = f"https://{request.get_host()}{settings.MEDIA_URL}uploads/" + combined_file
             print(file_url)
             if form_type=="form1":
-                prompt = "Two people hug each other warmly. They are smiling."
+                prompt = "Two people hug each other warmly.They are smiling. Replace background with romantic image."
             if form_type=="form2":
-                prompt = "Two people kiss each other"
+                prompt = "Two people kiss passionately. Replace background with romantic image."
             #Send file URLs to the special API
             result = asyncio(generateVideo(prompt, file_url))
             print(result)
