@@ -3,3 +3,4 @@ packaging==24.2
 django
 pillow
 fal_client
+django-cors-headers
