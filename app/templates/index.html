@@ -225,7 +225,7 @@
             console.log(data);
             loader.style.display = "none";
             for(i = 0 ; i < inputs.length; i++){
-              inputs[i].disabled = true
+              inputs[i].disabled = false
             }
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
