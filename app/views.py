@@ -62,9 +62,12 @@ def upload_file(request):
             result = asyncio.run(generateVideo(prompt, file_url))
             print(result)
             #Return success response
-            return render(request, 'index.html', {"success": result})
+            return JsonResponse({
+                'message': 'Files uploaded successfully',
+                'file_urls': result,
+            })
 
         except Exception as e:
-            return render(request, 'index.html', {"error": str(e)})
+            return JsonResponse({'error': str(e)}, status=500)
 
-    return render(request, 'index.html', {"error": "Invalid request"})
+    return JsonResponse({"error": "Invalid request"}, status=400)

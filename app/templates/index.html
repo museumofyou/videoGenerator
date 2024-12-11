@@ -72,7 +72,7 @@
           <h5 class="card-title">Hugging Video</h5>
           <form id="form1" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="hidden" name="form_type" value="form1">
+            <input type="hidden" name="form_type" value="form1" />
             <div class="mb-3">
               <label for="file1" class="form-label">Image 1</label>
               <input
@@ -107,7 +107,7 @@
           <h5 class="card-title">Kissing Video</h5>
           <form id="form2" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="hidden" name="form_type" value="form2">
+            <input type="hidden" name="form_type" value="form2" />
             <div class="mb-3">
               <label for="file1" class="form-label">Image 1</label>
               <input
@@ -142,7 +142,7 @@
           <h5 class="card-title">Squishing Video</h5>
           <form id="form3" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="hidden" name="form_type" value="form3">
+            <input type="hidden" name="form_type" value="form3" />
             <div class="mb-3">
               <label for="file" class="form-label">Image</label>
               <input type="file" name="file" class="form-control form3-input" />
@@ -166,21 +166,21 @@
 
         inputs.forEach((input) => {
           input.addEventListener("change", (event) => {
-            const file = event.target.files[0]; 
-            if (!file) return; 
+            const file = event.target.files[0];
+            if (!file) return;
 
             if (!allowedTypes.includes(file.type)) {
               alert(
                 `Invalid file type! Allowed types: ${allowedTypes.join(", ")}`
               );
-              event.target.value = ""; 
+              event.target.value = "";
               return;
             }
 
             const maxSizeBytes = maxSizeMB * 1024 * 1024;
             if (file.size > maxSizeBytes) {
               alert(`File size exceeds the limit of ${maxSizeMB} MB!`);
-              event.target.value = ""; 
+              event.target.value = "";
               return;
             }
 
@@ -214,6 +214,7 @@
         })
           .then((response) => response.json())
           .then((data) => {
+            console.log(data)
             loader.style.display = "none";
             console.log(data.message);
             if (data.message) {
@@ -225,12 +226,14 @@
                   const a = document.createElement("a");
                   a.style.display = "none";
                   a.href = url;
-                  a.download = fileName;
+                  a.download = fileName; // Ensure `fileName` is dynamically set
                   document.body.appendChild(a);
                   a.click();
                   window.URL.revokeObjectURL(url);
                 })
-                .catch((error) => console.error("Error downloading image:", error));
+                .catch((error) =>
+                  console.error("Error downloading image:", error)
+                );
             } else {
               document.getElementById("fail-alert").style.display = "block";
             }
@@ -257,7 +260,7 @@
 
     <script>
       function toggleSubmitButton(formInputsSelector, submitButtonId) {
-        console.log(formInputsSelector)
+        console.log(formInputsSelector);
         const inputs = document.querySelectorAll(formInputsSelector);
         const button = document.getElementById(submitButtonId);
 
