@@ -1,11 +1,11 @@
 import os
-import asyncio
 import logging
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core.files.storage import default_storage
 from django.conf import settings
 from PIL import Image, UnidentifiedImageError
+from asgiref.sync import async_to_sync
 import fal_client
 
 # Set up logging
@@ -78,14 +78,8 @@ def upload_file(request):
             elif form_type == "form2":
                 prompt = "Two people kiss passionately. Replace background with a romantic image."
 
-            # Start video generation task
-            async def process_video():
-                result = await generate_video(prompt, file_url)
-                logger.info(f"Video generation result: {result}")
-                return result
-            
-            video_task = asyncio.create_task(process_video())
-            result = asyncio.run(video_task)
+            # Call asynchronous function and block until completion
+            result = async_to_sync(generate_video)(prompt, file_url)
 
             return JsonResponse({
                 'message': 'Files uploaded and video generated successfully',
