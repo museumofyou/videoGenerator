@@ -6,7 +6,7 @@
     <title>AI Video Generator</title>
     <style>
       #loader {
-        display: block;
+        display: none;
         position: fixed;
         top: 50%;
         left: 50%;
@@ -17,6 +17,7 @@
         width: 50px;
         height: 50px;
         animation: spin 1s linear infinite;
+        z-index: 1;
       }
 
       @keyframes spin {
@@ -214,7 +215,7 @@
           .then((response) => response.json())
           .then((data) => {
             console.log(data);
-            // loader.style.display = "none";
+            loader.style.display = "none";
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
               fetch(data.videoUrl) // Assuming 'data.videoUrl' contains the video download URL
