@@ -202,11 +202,15 @@
         event.preventDefault();
         const loader = document.getElementById("loader");
         loader.style.display = "block";
-        console.log("disable form ---- ", document.getElementById("form1").disabled)
-        document.getElementById("form1").disabled = true
-        document.getElementById("form2").disabled = true
-        document.getElementById("form3").disabled = true
 
+        document.getElementById("form1-submit").disabled = true
+        document.getElementById("form2-submit").disabled = true
+        document.getElementById("form3-submit").disabled = true
+        
+        inputs = document.getElementsByName(file);
+        inputs.map(input => {
+          input.disabled = true
+        })
         document.getElementById("success-alert").style.display = "none";
         document.getElementById("fail-alert").style.display = "none";
 
@@ -220,9 +224,9 @@
           .then((data) => {
             console.log(data);
             loader.style.display = "none";
-            // document.getElementById("form1").disabled = false
-            // document.getElementById("form2").disabled = false
-            // document.getElementById("form3").disabled = false
+            inputs.map(input => {
+              input.disabled = false
+            })
             if (data.message) {
               document.getElementById("success-alert").style.display = "block";
               fetch(data.videoUrl) // Assuming 'data.videoUrl' contains the video download URL
