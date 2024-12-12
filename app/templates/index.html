@@ -228,7 +228,7 @@
             loader.style.display = "none";
             submitButton.disabled = false;
             console.log(data);
-            if (data.message === "success") {
+            if (data.message == "success") {
               document.getElementById("success-alert").style.display = "block";
               fetch(data.file_urls.video.url)
                 .then((response) => response.blob())
@@ -246,12 +246,14 @@
                   console.error("Error downloading video:", error)
                 );
             } else {
+              document.getElementById("success-alert").style.display = "none";
               document.getElementById("fail-alert").style.display = "block";
             }
           })
           .catch(() => {
             loader.style.display = "none";
             submitButton.disabled = false;
+            document.getElementById("success-alert").style.display = "none";
             document.getElementById("fail-alert").style.display = "block";
           });
       }
