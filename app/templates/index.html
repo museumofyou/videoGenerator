@@ -237,6 +237,7 @@
                   const a = document.createElement("a");
                   a.style.display = "none";
                   a.href = url;
+                  console.log(data.videoFileName);
                   a.download = data.videoFileName;
                   document.body.appendChild(a);
                   a.click();
