@@ -65,7 +65,7 @@ def upload_file(request):
             #print(result)
             #Return success response
             return JsonResponse({
-                'message': "fail",
+                'message': "success",
                 'file_urls': "result",
             })
 
