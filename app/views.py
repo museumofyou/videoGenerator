@@ -61,13 +61,13 @@ def upload_file(request):
             if form_type=="form2":
                 prompt = "Two people kiss passionately. Replace background with romantic image."
             #Send file URLs to the special API
-            result = asyncio.run(generateVideo(prompt, file_url))
-            print(result)
+            #result = asyncio.run(generateVideo(prompt, file_url))
+            #print(result)
             #Return success response
-            # return JsonResponse({
-            #     'message': "success",
-            #     'file_urls': result,
-            # })
+            return JsonResponse({
+                'message': "fail",
+                'file_urls': "result",
+            })
 
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)

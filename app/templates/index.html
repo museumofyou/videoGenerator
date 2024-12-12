@@ -206,7 +206,7 @@
         document.getElementById("form1-submit").disabled = true
         document.getElementById("form2-submit").disabled = true
         document.getElementById("form3-submit").disabled = true
-        
+
         document.getElementById("success-alert").style.display = "none";
         document.getElementById("fail-alert").style.display = "none";
 
@@ -222,7 +222,7 @@
             loader.style.display = "none";
             if (data.message == 'success') {
               document.getElementById("success-alert").style.display = "block";
-              fetch(data.file_urls.video.url) // Assuming 'data.videoUrl' contains the video download URL
+              fetch(data.file_urls.video.url)
                 .then((response) => response.blob())
                 .then((blob) => {
                   const url = window.URL.createObjectURL(blob);
