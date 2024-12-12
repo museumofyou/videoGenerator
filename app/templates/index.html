@@ -246,14 +246,14 @@
                   console.error("Error downloading video:", error)
                 );
             } else {
-              document.getElementById("success-alert").style.display = "none";
+              console.log("message fail");
               document.getElementById("fail-alert").style.display = "block";
             }
           })
-          .catch(() => {
+          .catch((error) => {
+            console.log("fetch catch ---> ",error)
             loader.style.display = "none";
             submitButton.disabled = false;
-            document.getElementById("success-alert").style.display = "none";
             document.getElementById("fail-alert").style.display = "block";
           });
       }
