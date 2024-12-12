@@ -57,10 +57,10 @@
       <h1 class="text-center mb-4">AI Video Generator</h1>
 
       <!-- Success and Failure Alerts -->
-      <div id="success-alert" class="alert alert-success d-none" role="alert">
+      <div id="success-alert" class="alert success d-none" role="alert">
         AI video created successfully!
       </div>
-      <div id="fail-alert" class="alert alert-danger d-none" role="alert">
+      <div id="fail-alert" class="alert fail d-none" role="alert">
         AI video creation failed!
       </div>
 
@@ -227,9 +227,9 @@
             for(i = 0 ; i < inputs.length; i++){
               inputs[i].disabled = false
             }
-            if (data.message) {
+            if (data.message == 'success') {
               document.getElementById("success-alert").style.display = "block";
-              fetch(data.videoUrl) // Assuming 'data.videoUrl' contains the video download URL
+              fetch(data.file_urls.video.url) // Assuming 'data.videoUrl' contains the video download URL
                 .then((response) => response.blob())
                 .then((blob) => {
                   const url = window.URL.createObjectURL(blob);

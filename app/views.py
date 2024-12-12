@@ -31,6 +31,8 @@ async def generateVideo(prompt, url):
     return result
 
 def upload_file(request):
+    print("request.methon --> ", request.method)
+    print("request.FILES --> ", request.FILES)
     if request.method == 'POST' and request.FILES:
         form_type = request.POST.get('form_type')
         print(form_type)
@@ -62,10 +64,10 @@ def upload_file(request):
             result = asyncio.run(generateVideo(prompt, file_url))
             print(result)
             #Return success response
-            return JsonResponse({
-                'message': 'Files uploaded successfully',
-                'file_urls': result,
-            })
+            # return JsonResponse({
+            #     'message': "success",
+            #     'file_urls': result,
+            # })
 
         except Exception as e:
             return JsonResponse({'error': str(e)}, status=500)
