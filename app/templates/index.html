@@ -227,7 +227,7 @@
           .then((data) => {
             loader.style.display = "none";
             submitButton.disabled = false;
-
+            console.log(data);
             if (data.message === "success") {
               document.getElementById("success-alert").style.display = "block";
               fetch(data.file_urls.video.url)
