@@ -206,11 +206,7 @@
         document.getElementById("form1-submit").disabled = true
         document.getElementById("form2-submit").disabled = true
         document.getElementById("form3-submit").disabled = true
-
-        inputs = document.getElementsByClassName("form-control")
-        for(i = 0 ; i < inputs.length; i++){
-          inputs[i].disabled = true
-        }
+        
         document.getElementById("success-alert").style.display = "none";
         document.getElementById("fail-alert").style.display = "none";
 
@@ -224,9 +220,6 @@
           .then((data) => {
             console.log(data);
             loader.style.display = "none";
-            for(i = 0 ; i < inputs.length; i++){
-              inputs[i].disabled = false
-            }
             if (data.message == 'success') {
               document.getElementById("success-alert").style.display = "block";
               fetch(data.file_urls.video.url) // Assuming 'data.videoUrl' contains the video download URL
