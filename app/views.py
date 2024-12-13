@@ -16,18 +16,20 @@ async def generateVideo(prompt, url):
         if isinstance(update, fal_client.InProgress):
             for log in update.logs:
                 print("in progress ---- ",log["message"])
-
-    result = await fal_client.subscribe_async(
-                "fal-ai/kling-video/v1.5/pro/image-to-video",
-                arguments={
-                    "prompt": prompt,
-                    "image_url": url,
-                    "duration": "5",
-                    "aspect_ratio": "16:9"
-                },
-                with_logs=True,
-                on_queue_update=on_queue_update,
-            )
+    if not prompt == "none":
+        result = await fal_client.subscribe_async(
+                    "fal-ai/kling-video/v1.5/pro/image-to-video",
+                    arguments={
+                        "prompt": prompt,
+                        "image_url": url,
+                        "duration": "5",
+                        "aspect_ratio": "16:9"
+                    },
+                    with_logs=True,
+                    on_queue_update=on_queue_update,
+                )
+    else :
+        result = "none"
     return result
 
 def upload_file(request):
@@ -57,9 +59,11 @@ def upload_file(request):
             file_url = f"https://{request.get_host()}{settings.MEDIA_URL}uploads/" + combined_file
             print(file_url)
             if form_type=="form1":
-                prompt = "Two people are hugging each other warmly. They are smiling."
+                prompt = "Two people are looking at each other and hugging each other warmly. They are smiling."
             if form_type=="form2":
                 prompt = "Two people are kissing passionately."
+            if form_type=="form3":
+                prompt = "none"
             #Send file URLs to the special API
             result = asyncio.run(generateVideo(prompt, file_url))
             print(result)
